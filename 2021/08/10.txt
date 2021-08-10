@@ -1,4 +1,0 @@
-git@github.com:roylaurie/.commitlog.git
-commit 7f254bda2174d1f88df409bc0b919a04bca0e16a
-Author: roylaurie <public@roylaurie.email>
-Date:   Tue Aug 10 14:31:07 2021 -0700
