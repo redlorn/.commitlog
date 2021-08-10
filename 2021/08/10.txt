@@ -1,12 +1,4 @@
-git@github.com:roylaurie/.draft.git
-asmov/bullfrog
-c8099e6a0f271a5dcc4168aff58f41889cc82df8
-1628629790
 git@github.com:roylaurie/.commitlog.git
-commit 19d036eb736a7514f8254646a52660097f2c214f
+commit 7f254bda2174d1f88df409bc0b919a04bca0e16a
 Author: roylaurie <public@roylaurie.email>
-Date:   Tue Aug 10 14:30:49 2021 -0700
-git@github.com:roylaurie/.draft.git
-asmov/bullfrog
-eec6fb9ea7c9dba05f5274852de117916514b956
-1628631065
+Date:   Tue Aug 10 14:31:07 2021 -0700
