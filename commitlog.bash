@@ -15,8 +15,9 @@ _COMMITLOG_PATH="$HOME/project/.commitlog"
 _pwd="$PWD"
 _repo="$(git config --get remote.origin.url)"
 _branch="$(git branch --show-current)"
-_commitid="$(git log -1 HEAD | head -1 | awk '{print $2}')"
+_commitid="$(git log -1 HEAD | head -1 | gawk '{print $2}')"
 _time="$(date +'%s')"
+_diffstats="$(git diff --shortstat HEAD HEAD~1 | gawk '{print $1,$4,$6}' | sed -e's/\s*$//g')"
 _relpath="$(date +'./%Y/%m/%d.txt')"
 
 cd "$_COMMITLOG_PATH"
@@ -29,9 +30,10 @@ echo "$_repo" >> "$_relpath"
 echo "$_branch" >> "$_relpath"
 echo "$_commitid" >> "$_relpath"
 echo "$_time" >> "$_relpath"
+echo "$_diffstats" >> "$_relpath"
 
 git add .
-#git commit -m "$_repo / $_branch"
-#git push
+git commit -m "$_repo / $_branch"
+git push
 
 cd "$_pwd"
