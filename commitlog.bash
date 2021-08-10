@@ -2,6 +2,14 @@
 set -o errexit -o pipefail -o privileged -o nounset
 shopt -s extglob
 
+_gitUser="$(git config --global user.name) $(git config --global user.email)"
+_commitUser="$(git log -1 HEAD | head -2 | tail -1 | awk '{print $2 " " substr($3,2, length($3)-2)}')"
+
+[[ "$_gitUser" == "$_commitUser" ]] || {
+  echo "skipping commitlog for non-default user"
+  exit 0
+}
+
 _COMMITLOG_PATH="$HOME/project/.commitlog"
 
 _pwd="$PWD"
@@ -23,7 +31,7 @@ echo "$_commitid" >> "$_relpath"
 echo "$_time" >> "$_relpath"
 
 git add .
-git commit -m "$_repo / $_branch"
-git push
+#git commit -m "$_repo / $_branch"
+#git push
 
 cd "$_pwd"
