@@ -17,8 +17,13 @@ _repo="$(git config --get remote.origin.url)"
 _branch="$(git branch --show-current)"
 _commitid="$(git log -1 HEAD | head -1 | gawk '{print $2}')"
 _time="$(date +'%s')"
-_diffstats="$(git diff --shortstat HEAD~1 HEAD | gawk '{print int($1),int($4),int($6)}' | sed -e's/\s*$//g')"
 _relpath="$(date +'./%Y/%m/%d.log.txt')"
+
+_diff="$(git diff --shortstat HEAD~1 HEAD)" #| gawk '{print int($1),int($4),int($6)}' | sed -e's/\s*$//g')"
+declare -A _diffstats
+_diffstats[lines]="$(echo "$_diff" | gawk '{print $1}')"
+_diffstats[insertions]="$(echo "$_diff" | grep -oE '([0-9]+) insertion' | grep -oE '([0-9]+)')"
+_diffstats[deletions]="$(echo "$_diff" | grep -oE '([0-9]+) deletion' | grep -oE '([0-9]+)' || echo '0')"
 
 cd "$_COMMITLOG_PATH"
 
@@ -31,7 +36,7 @@ $_repo
 $_branch
 $_commitid
 $_time
-$_diffstats
+${_diffstats[lines]} ${_diffstats[insertions]} ${_diffstats[deletions]}
 HEREDOC
 
 git add .
