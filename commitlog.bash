@@ -26,11 +26,13 @@ git pull --rebase
 
 mkdir -p "$(dirname "$_relpath")"
 
-echo "$_repo" >> "$_relpath"
-echo "$_branch" >> "$_relpath"
-echo "$_commitid" >> "$_relpath"
-echo "$_time" >> "$_relpath"
-echo "$_diffstats" >> "$_relpath"
+echo >> "$_relpath" <<HEREDOC
+$_repo
+$_branch
+$_commitid
+$_time
+$_diffstats
+HEREDOC
 
 git add .
 git commit -m "$_repo / $_branch"
