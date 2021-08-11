@@ -23,7 +23,6 @@ main
 816986326a35b057db2614c59b04a4388ab94b8b
 1628641257
 1 1 1
-
 git@github.com:roylaurie/.commitlog.git
 main
 d11476c3efeece43f0651de77e7f739951a2ff17
