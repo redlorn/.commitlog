@@ -26,7 +26,7 @@ git pull --rebase
 
 mkdir -p "$(dirname "$_relpath")"
 
-echo >> "$_relpath" <<HEREDOC
+cat <<HEREDOC >> "$_relpath"
 $_repo
 $_branch
 $_commitid
