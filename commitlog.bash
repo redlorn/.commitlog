@@ -18,7 +18,7 @@ _branch="$(git branch --show-current)"
 _commitid="$(git log -1 HEAD | head -1 | gawk '{print $2}')"
 _time="$(date +'%s')"
 _diffstats="$(git diff --shortstat HEAD HEAD~1 | gawk '{print $1,$4,$6}' | sed -e's/\s*$//g')"
-_relpath="$(date +'./%Y/%m/%d.txt')"
+_relpath="$(date +'./%Y/%m/%d.log.txt')"
 
 cd "$_COMMITLOG_PATH"
 
