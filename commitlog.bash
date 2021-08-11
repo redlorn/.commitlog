@@ -21,7 +21,6 @@ _diffstats="$(git diff --shortstat HEAD~1 HEAD | gawk '{print int($1),int($4),in
 _relpath="$(date +'./%Y/%m/%d.log.txt')"
 
 cd "$_COMMITLOG_PATH"
-
 git pull --rebase
 
 mkdir -p "$(dirname "$_relpath")"
