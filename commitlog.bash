@@ -3,7 +3,7 @@ set -o errexit -o pipefail -o privileged -o nounset
 shopt -s extglob
 
 _gitUser="$(git config --global user.name) $(git config --global user.email)"
-_commitUser="$(git log -1 HEAD | head -2 | tail -1 | awk '{print $2 " " substr($3,2, length($3)-2)}')"
+_commitUser="$(git log -1 HEAD | head -2 | tail -1 | awk '{print $2 " " substr($3,2,length($3)-2)}')"
 
 [[ "$_gitUser" == "$_commitUser" ]] || {
   echo "skipping commitlog for non-default user"
@@ -19,10 +19,10 @@ _commitid="$(git log -1 HEAD | head -1 | gawk '{print $2}')"
 _time="$(date +'%s')"
 _relpath="$(date +'./%Y/%m/%d.log.txt')"
 
-_diff="$(git diff --shortstat HEAD~1 HEAD)" #| gawk '{print int($1),int($4),int($6)}' | sed -e's/\s*$//g')"
+_diff="$(git diff --shortstat HEAD~1 HEAD)"
 declare -A _diffstats
-_diffstats[lines]="$(echo "$_diff" | gawk '{print $1}')"
-_diffstats[insertions]="$(echo "$_diff" | grep -oE '([0-9]+) insertion' | grep -oE '([0-9]+)')"
+_diffstats[lines]="$(echo "$_diff" | gawk '{print $1}' || echo '0')"
+_diffstats[insertions]="$(echo "$_diff" | grep -oE '([0-9]+) insertion' | grep -oE '([0-9]+)' || echo '0')"
 _diffstats[deletions]="$(echo "$_diff" | grep -oE '([0-9]+) deletion' | grep -oE '([0-9]+)' || echo '0')"
 
 cd "$_COMMITLOG_PATH"
