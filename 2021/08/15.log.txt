@@ -43,3 +43,8 @@ asmov/bullfrog
 edfd4224aca10a7d123aba8be09517fbebdddd70
 1629059416
 8 8 1
+git@github.com:roylaurie/.draft.git
+asmov/bullfrog
+2189e92aff67bce5a9e19424aa3f340522767ddf
+1629059941
+1 11 7
