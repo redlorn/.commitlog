@@ -18,3 +18,8 @@ roylaurie/rustbook
 61d873d400e4c1494c534893cbffde2bb21201c6
 1629324557
 1 3 3
+git@github.com:roylaurie/.draft.git
+roylaurie/rustbook
+514febd7a4aa97247596196b9376dd75a224e20e
+1629325350
+1 22 22
