@@ -1,14 +1,14 @@
-git@github.com:roylaurie/.draft.git
-roylaurie/rustbook
+git@github.com:redlorn/.draft.git
+redlorn/rustbook
 919edf51655dbde22b02d0186c59478b7a9783a9
 1629225848
 6 22 0
-git@github.com:roylaurie/.draft.git
-roylaurie/rustbook
+git@github.com:redlorn/.draft.git
+redlorn/rustbook
 e65dae9a143ce4c32517137e3bc926f2a1dcbc06
 1629230212
 3 134 0
-git@github.com:roylaurie/.draft.git
+git@github.com:redlorn/.draft.git
 asmov/bullfrog
 9096c270778c9bc06eef0e5e3ab77e1b5af8ddb7
 1629240298
