@@ -18,3 +18,8 @@ roylaurie/rustbook
 2490cb446faa3205d8eedda7d5947431c646fb57
 1630034928
 1 33 1
+git@github.com:redlorn/.draft.git
+redlorn/rustbook
+474efc1fa19e2756032be19f1217274c16684f3f
+1630035067
+1 33 1
