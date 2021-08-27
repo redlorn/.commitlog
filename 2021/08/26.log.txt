@@ -23,3 +23,8 @@ redlorn/rustbook
 474efc1fa19e2756032be19f1217274c16684f3f
 1630035067
 1 33 1
+git@github.com:redlorn/.draft.git
+redlorn/rustbook
+eb730351abefe0ef9a24d2d0906a7f39a87c7fb4
+1630035217
+1 1 1
