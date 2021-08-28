@@ -14,7 +14,7 @@ main
 1630013716
 9 53 53
 git@github.com:redlorn/.draft.git
-roylaurie/rustbook
+redlorn/rustbook
 2490cb446faa3205d8eedda7d5947431c646fb57
 1630034928
 1 33 1
