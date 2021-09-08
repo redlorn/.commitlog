@@ -2,45 +2,59 @@
 set -o errexit -o pipefail -o privileged -o nounset
 shopt -s extglob
 
-_COMMITLOG_PATH="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+declare -r _SOURCEBASE="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+declare -r _OPWD="$PWD"
 
-_gitUser="$(git config --global user.name) $(git config --global user.email)"
-_commitUser="$(git log -1 HEAD | head -2 | tail -1 | awk '{print $2 " " substr($3,2,length($3)-2)}')"
+trap_exit () {
+  cd "$_OPWD"
+}
 
-[[ "$_gitUser" == "$_commitUser" ]] || {
-  echo "skipping commitlog for non-default user"
+trap 'trap_exit' EXIT
+
+main () {
+  local gitUser commitUser
+  gitUser="$(git config --global user.name) $(git config --global user.email)"
+  commitUser="$(git log -1 HEAD | head -2 | tail -1 | awk '{print $2 " " substr($3,2,length($3)-2)}')"
+
+  [[ "$gitUser" == "$commitUser" ]] || {
+    echo "skipping commitlog for non-default user"
+    exit 0
+  }
+
+  local repo branch commitid time relpath
+  repo="$(git config --get remote.origin.url)"
+  branch="$(git branch --show-current)"
+  commitid="$(git log -1 HEAD | head -1 | gawk '{print $2}')"
+  time="$(date +'%s')"
+  relpath="$(date +'./%Y/%m/%d.log.txt')"
+
+  local diff
+  diff="$(git diff --shortstat HEAD~1 HEAD)"
+
+  local -A diffstats
+  diffstats[lines]="$(echo "$diff" | gawk '{print $1}' || echo '0')"
+  diffstats[insertions]="$(echo "$diff" | grep -oE '([0-9]+) insertion' | grep -oE '([0-9]+)' || echo '0')"
+  diffstats[deletions]="$(echo "$diff" | grep -oE '([0-9]+) deletion' | grep -oE '([0-9]+)' || echo '0')"
+
+  cd "$_SOURCEBASE"
+
+  git pull --rebase
+
+  mkdir -p "$(dirname "$relpath")"
+
+  cat <<HEREDOC >>"$relpath"
+$repo
+$branch
+$commitid
+$time
+${diffstats[lines]} ${diffstats[insertions]} ${diffstats[deletions]}
+HEREDOC
+
+  git add .
+  git commit -m "$repo / $branch"
+  git push
+
   exit 0
 }
 
-_pwd="$PWD"
-_repo="$(git config --get remote.origin.url)"
-_branch="$(git branch --show-current)"
-_commitid="$(git log -1 HEAD | head -1 | gawk '{print $2}')"
-_time="$(date +'%s')"
-_relpath="$(date +'./%Y/%m/%d.log.txt')"
-
-_diff="$(git diff --shortstat HEAD~1 HEAD)"
-declare -A _diffstats
-_diffstats[lines]="$(echo "$_diff" | gawk '{print $1}' || echo '0')"
-_diffstats[insertions]="$(echo "$_diff" | grep -oE '([0-9]+) insertion' | grep -oE '([0-9]+)' || echo '0')"
-_diffstats[deletions]="$(echo "$_diff" | grep -oE '([0-9]+) deletion' | grep -oE '([0-9]+)' || echo '0')"
-
-cd "$_COMMITLOG_PATH"
-
-git pull --rebase
-
-mkdir -p "$(dirname "$_relpath")"
-
-cat <<HEREDOC >> "$_relpath"
-$_repo
-$_branch
-$_commitid
-$_time
-${_diffstats[lines]} ${_diffstats[insertions]} ${_diffstats[deletions]}
-HEREDOC
-
-git add .
-git commit -m "$_repo / $_branch"
-git push
-
-cd "$_pwd"
+main "$@"
