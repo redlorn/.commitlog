@@ -21,11 +21,11 @@ main () {
     exit 0
   }
 
-  local repo branch commitid time relpath
+  local repo branch commitID timenow relpath
   repo="$(git config --get remote.origin.url)"
   branch="$(git branch --show-current)"
-  commitid="$(git log -1 HEAD | head -1 | gawk '{print $2}')"
-  time="$(date +'%s')"
+  commitID="$(git log -1 HEAD | head -1 | gawk '{print $2}')"
+  timenow="$(date +'%s')"
   relpath="$(date +'./%Y/%m/%d.log.txt')"
 
   local diff
@@ -45,8 +45,8 @@ main () {
   cat <<HEREDOC >>"$relpath"
 $repo
 $branch
-$commitid
-$time
+$commitID
+$timenow
 ${diffstats[lines]} ${diffstats[insertions]} ${diffstats[deletions]}
 HEREDOC
 
