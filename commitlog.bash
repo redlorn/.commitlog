@@ -2,6 +2,7 @@
 set -o errexit -o pipefail -o privileged -o nounset
 shopt -s extglob
 
+# shellcheck disable=SC2155
 declare -r _SOURCEBASE="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 declare -r _OPWD="$PWD"
 
